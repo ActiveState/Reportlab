@@ -11,6 +11,17 @@ E.g. to retrieve the changes made between release 3.4 and release 3.5, type::
 The contributors lists are in no order and apologies to those accidentally not
 mentioned. If we missed you, please let us know!
 
+CHANGES  3.5.68.post3  05/11/2026
+---------------------------------
+        * ActiveState security release for Python 2.7, follow-up to CVE-2023-33733:
+          colour strings can no longer call setColors, which rebound the
+          reportlab.lib.colors globals (named colours and toColor itself) for the
+          whole process from untrusted markup such as <font color="...">
+        * rl_extended_literal_eval: fix NameError (astBinOp) and AttributeError on
+          complex literals such as "1+1j"
+        * 3.5.68.2 (2024-07): Python 2.7 compatibility for the CVE-2023-33733
+          backport (dictproxyhack instead of types.MappingProxyType, no ast.Bytes)
+
 CHANGES  3.5.68.1  29/12/2023
 -----------------------------
         * implement a safer toColor with rl_config.toColorCanUse option and rl_extended_literal_eval
