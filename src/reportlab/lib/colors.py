@@ -904,7 +904,7 @@ class toColor:
                         _chooseEnforceColorSpace _enforceCMYK _enforceError _enforceRGB _enforceSEP _enforceSEP_BLACK
                         _enforceSEP_CMYK _namedColors _re_css asNative cmyk2rgb cmykDistance color2bw colorDistance
                         cssParse describe fade fp_str getAllNamedColors hsl2rgb hue2rgb isStr linearlyInterpolatedColor
-                        literal_eval obj_R_G_B opaqueColor rgb2cmyk setColors toColor toColorOrNone'''.split()}
+                        literal_eval obj_R_G_B opaqueColor rgb2cmyk toColor toColorOrNone'''.split()}
                 G.update(self._G)
                 try:
                     return toColor(rl_safe_eval(arg,g=G,l={}))
@@ -917,8 +917,12 @@ class toColor:
                         _chooseEnforceColorSpace _enforceCMYK _enforceError _enforceRGB _enforceSEP _enforceSEP_BLACK
                         _enforceSEP_CMYK _namedColors _re_css asNative cmyk2rgb cmykDistance color2bw colorDistance
                         cssParse describe fade fp_str getAllNamedColors hsl2rgb hue2rgb linearlyInterpolatedColor
-                        obj_R_G_B opaqueColor rgb2cmyk setColors toColor toColorOrNone'''.split()
+                        obj_R_G_B opaqueColor rgb2cmyk toColor toColorOrNone'''.split()
                         if callable(C.get(k,None))}
+                #setColors is deliberately not callable from a colour string: it
+                #rebinds this module's globals (red, toColor, ...) for the whole
+                #process, so untrusted markup such as <font color="setColors(...)">
+                #could change every later colour lookup.
                 try:
                     return rl_extended_literal_eval(arg,C,S)
                 except (ValueError, SyntaxError):
