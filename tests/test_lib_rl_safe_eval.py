@@ -198,7 +198,7 @@ class ExtendedLiteralEval(unittest.TestCase):
                 ('__file__', 'Bad expression'),
                 ('__name__', 'Bad expression'),
                 ):
-            self.assertEqual(showVal(expr),expected,"rl_extended_literal_eval(%s) is not equal to expected $s" % (repr(expr),expected))
+            self.assertEqual(showVal(expr),expected,"rl_extended_literal_eval(%s) is not equal to expected %s" % (repr(expr),expected))
 
 def makeSuite():
     return makeSuiteForClasses(SafeEvalTestCase,SafeEvalTestBasics,ExtendedLiteralEval)

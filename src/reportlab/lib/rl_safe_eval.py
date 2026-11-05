@@ -14,8 +14,13 @@ haveNameConstant = hasattr(ast,'NameConstant')
 haveMatMult = haveMultiStarred = hasattr(ast,'MatMult')
 import textwrap
 
-# import a replacement for MappingProxyType
-from dictproxyhack import dictproxy
+# Read-only mapping proxy: types.MappingProxyType on Python 3; on Python 2
+# (which has no public equivalent) use the dictproxyhack package, a
+# Python 2-only install requirement in setup.py.
+if isPy3:
+	dictproxy = types.MappingProxyType
+else:
+	from dictproxyhack import dictproxy
 
 class BadCode(ValueError):
 	pass
@@ -1398,8 +1403,8 @@ def rl_extended_literal_eval(expr, safe_callables=None, safe_names=None):
 		elif isinstance(node, ast.BinOp) and \
 			 isinstance(node.op, (ast.Add, ast.Sub)) and \
 			 isinstance(node.right, (ast.Num, ast.UnaryOp, ast.BinOp)) and \
-			 isinstance(node.right.n, complex) and \
-			 isinstance(node.left, (ast.Num, ast.UnaryOp, astBinOp)):
+			 isinstance(getattr(node.right, 'n', None), complex) and \
+			 isinstance(node.left, (ast.Num, ast.UnaryOp, ast.BinOp)):
 			left = _convert(node.left)
 			right = _convert(node.right)
 			if isinstance(node.op, ast.Add):
