@@ -14,8 +14,13 @@ haveNameConstant = hasattr(ast,'NameConstant')
 haveMatMult = haveMultiStarred = hasattr(ast,'MatMult')
 import textwrap
 
-# import a replacement for MappingProxyType
-from dictproxyhack import dictproxy
+# Read-only mapping proxy: types.MappingProxyType on Python 3; on Python 2
+# (which has no public equivalent) use the dictproxyhack package, a
+# Python 2-only install requirement in setup.py.
+if isPy3:
+	dictproxy = types.MappingProxyType
+else:
+	from dictproxyhack import dictproxy
 
 class BadCode(ValueError):
 	pass

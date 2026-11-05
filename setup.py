@@ -654,16 +654,15 @@ def main():
                 'Topic :: Text Processing :: Markup',
                 'Programming Language :: Python :: 2',
                 'Programming Language :: Python :: 2.7',
-                'Programming Language :: Python :: 3',
-                'Programming Language :: Python :: 3.6',
-                'Programming Language :: Python :: 3.7',
-                'Programming Language :: Python :: 3.8',
-                'Programming Language :: Python :: 3.9',
+                'Programming Language :: Python :: 2 :: Only',
                 ],
             
             #this probably only works for setuptools, but distutils seems to ignore it
-            install_requires=['pillow>=4.0.0'],
-            python_requires='>=2.7, <4',
+            #ActiveState's 3.5.68.postN releases are the Python 2.7 line; Python 3
+            #uses upstream 3.5.68 with the CVE-2023-33733 patch instead.
+            #dictproxyhack backs the read-only namespaces in rl_safe_eval.
+            install_requires=['pillow>=4.0.0', 'dictproxyhack; python_version < "3"'],
+            python_requires='>=2.7, <3',
             extras_require={
                 'RLPYCAIRO': ['rlPyCairo>=0.0.5'],
                 },
