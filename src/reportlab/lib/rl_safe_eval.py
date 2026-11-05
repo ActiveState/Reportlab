@@ -1398,8 +1398,8 @@ def rl_extended_literal_eval(expr, safe_callables=None, safe_names=None):
 		elif isinstance(node, ast.BinOp) and \
 			 isinstance(node.op, (ast.Add, ast.Sub)) and \
 			 isinstance(node.right, (ast.Num, ast.UnaryOp, ast.BinOp)) and \
-			 isinstance(node.right.n, complex) and \
-			 isinstance(node.left, (ast.Num, ast.UnaryOp, astBinOp)):
+			 isinstance(getattr(node.right, 'n', None), complex) and \
+			 isinstance(node.left, (ast.Num, ast.UnaryOp, ast.BinOp)):
 			left = _convert(node.left)
 			right = _convert(node.right)
 			if isinstance(node.op, ast.Add):
